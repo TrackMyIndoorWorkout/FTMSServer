@@ -23,5 +23,5 @@ class FTMSService(Service):
     # flags = [84, 11]
 
     # Bluetooth data is little endian.
-    rate = struct.pack("<" + "B" * len(measurement), *measurement)
-    self.measurement.changed(rate)
+    serialized = struct.pack("<" + "B" * len(measurement), *measurement)
+    self.measurement.changed(serialized)

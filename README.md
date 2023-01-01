@@ -8,6 +8,6 @@ The application can be given a server address, in which case it'll to connect th
 The MVP (Minimum Viable Product) supports Linux right now, and requires some tech savviness to set up. Here is how I use it:
 1. I tether my phone to my laptop via USB.
 2. I start the server code on my laptop (currently binds to localhost port 65432).
-2. I port forward the 65432 port from my laptop to my phone where I run the Track My Indoor Workout via `adb` (Android Debugger). See https://android.stackexchange.com/questions/66564/port-forwarding-during-usb-tethering
-3. I specify the localhost and that forwarded port endpoint as the server on my phone.
-4. After that the workout should be relayed. The extra BLE peripheral will show up in the scans as named "Indoor Bike" and will have an 0x1826 FTMS service with a 0x2AD2 Indoor Bike characteristic which will stream the workout live.
+2. I port forward the 65432 port from my laptop to my phone where I run the Track My Indoor Workout via `adb reverse tcp:65432 tcp:65432` (Android Debugger). This way the phone's localhost 65432 port will be forwarded to the laptop's 65432. See https://android.stackexchange.com/questions/66564/port-forwarding-during-usb-tethering
+3. I specify `127.0.0.1:65432` TCP endpoint as the server on my phone (which is actually the forwarded server from my laptop).
+4. After that the workout should be relayed. The extra BLE peripheral will show up in the BLE scans as device named "Indoor Bike" and will have an 0x1826 FTMS service with a 0x2AD2 Indoor Bike characteristic which will stream the workout live.

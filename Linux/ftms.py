@@ -41,3 +41,24 @@ class FTMSService(Service):
       self.ride_measurement.changed(serialized)
     elif self.state == FTMSState.PADDLING:
       self.paddle_measurement.changed(serialized)
+
+  def process_descriptor(self, descriptor):
+    if descriptor[1] != 0x18 or descriptor[2] != 0x26:
+      print(f"Wrong FTMS service UUID: not 0x1826")
+      return 0
+
+    if descriptor[3] != 0x2A:
+      print(f"Wrong FTMS characteristic UUID: does not start with 0x2A")
+      return 0
+
+    if descriptor[4] != 0xD1 and descriptor[4] != 0xD2:
+      print(f"Unsupported machine: currently 0x2AD1 Rower or 0x2AD2 Indoor Bike")
+      return 0
+
+    if descriptor[4] == 0xD1:
+      self.state = FTMSState.PADDLING
+    else:  # data[4] == 0xD2:
+      self.state = FTMSState.RIDING
+
+    return descriptor[5]  # packet_length
+

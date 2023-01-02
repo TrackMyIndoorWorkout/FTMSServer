@@ -63,26 +63,12 @@ async def main():
 
         print(f"Recevied: {data.hex()}")
         if service.state == FTMSState.WAITING_FOR_DESCRIPTOR:
-          if data[1] != 0x18 or data[2] != 0x26:
-            print(f"Wrong FTMS service UUID: not 0x1826")
+          packet_length = service.process_descriptor(data)
+          if not packet_length:
             break
-
-          if data[3] != 0x2A:
-            print(f"Wrong FTMS characteristic UUID: does not start with 0x2A")
-            break
-
-          if data[4] != 0xD1 and data[4] != 0xD2:
-            print(f"Unsupported machine: currently 0x2AD1 Rower or 0x2AD2 Indoor Bike")
-            break
-          else:
-            packet_length = data[5]
-            if data[4] == 0xD1:
-              service.state = FTMSState.PADDLING
-            else: # data[4] == 0xD2:
-              service.state = FTMSState.RIDING
         else:
           service.update_measurement(data)
-          await asyncio.sleep(0.1) # safety sleep
+          await asyncio.sleep(0.1)  # safety sleep
 
   await bus.wait_for_disconnect()
 

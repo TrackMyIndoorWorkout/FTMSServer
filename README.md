@@ -11,3 +11,12 @@ The MVP (Minimum Viable Product) supports Linux right now, and requires some tec
 3. I port forward the 65432 port from my laptop to my phone where I run the Track My Indoor Workout via `adb reverse tcp:65432 tcp:65432` (Android Debugger). This way the phone's localhost 65432 port will be forwarded to the laptop's 65432. See https://android.stackexchange.com/questions/66564/port-forwarding-during-usb-tethering
 4. I specify `127.0.0.1:65432` TCP endpoint as the server on my phone (which is actually the forwarded server from my laptop).
 5. After that the workout should be relayed. The extra BLE peripheral will show up in the BLE scans as device named "Indoor Bike" and will have an 0x1826 FTMS service with a 0x2AD2 Indoor Bike characteristic which will stream the workout live.
+
+## Descriptor format for client applications
+The FTMS packet stream is preceded by a 6 byte sequence so the server can set up for the upcoming FTMS format stream.
+1. Version number
+2. 0x18 (first byte of FTMS service UUID)
+3. 0x26 (second byte of FTMS service UUID)
+4. 0x2A (first byte of FTMS data characteristic UUID)
+5. 0x?? (second byte of FTMS data characteristic UUID)
+6. Fixed byte length of the upcoming FTMS service

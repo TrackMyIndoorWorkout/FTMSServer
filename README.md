@@ -1,9 +1,9 @@
 # FTMSRepeater
 Server for receiving FTMS data and realying it as a BLE FTMS peripheral.
-This server is originally intended to work with the Track My Indoor Workout FOSS application.
-The application can be given a server address, in which case it'll to connect that address and relay the FTMS data to it.
+This server is originally intended to work with the Track My Indoor Workout FOSS (Free and Open Source) application.
+The application can be given a server address, in which case it'll connect to that address and relay the FTMS data to it.
 1. This way the workout can be picked up by multiple software even if your fitness machine is not capable of multiple BLE connections. (Most of the machines are not able to do that, enhanced ones like the Wahoo KICKR can handle multiple connections).
-2. Another great use can be if an app does not support machines what TMIW supports, such as Kinomap does not support Precor Spinner Chrono Power or purely CSC sensor pair based DIY trainer setups (Kinomap seemed to only support power meter based setups for me).
+2. Another great use can be if an app does not support machines what TMIW (Track My Indoor Workout) supports, such as Kinomap does not support Precor Spinner Chrono Power or purely CSC sensor pair based DIY trainer setups (Kinomap seemed to only support power meter based setups for me).
 
 The MVP (Minimum Viable Product) supports Linux right now, and requires some tech savviness to set up. Here is how I use it:
 1. I tether my phone to my laptop via USB.
